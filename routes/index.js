@@ -8,4 +8,8 @@ routes.home = function(req, res){
 	res.sendfile('./public/main.html')
 };
 
+routes.createWiki = function (req, res){
+	console.log(req.body);
+}
+
 module.exports = routes;

@@ -7,7 +7,7 @@ body {
 }
 
 #wrap {
-  margin: 50px 100px;
+  margin: 100px 400px;
   display: inline-block;
   position: relative;
   height: 60px;
@@ -16,9 +16,9 @@ body {
   position: relative;
 }
 
-input[type="text"] {
+#search {
   height: 60px;
-  font-size: 40px;
+  font-size: 200%;
   display: inline-block;
   font-family: "Lato";
   font-weight: 100;
@@ -37,18 +37,18 @@ input[type="text"] {
   cursor: pointer;
 }
 
-input[type="text"]:focus:hover {
+#search:focus:hover {
   border-bottom: 1px solid #BBB;
 }
 
-input[type="text"]:focus {
-  width: 700px;
+#search:focus {
+  width: 500px;
   z-index: 1;
   border-bottom: 1px solid #BBB;
   cursor: text;
 }
 
-input[type="submit"] {
+#search_submit {
   height: 67px;
   width: 63px;
   display: inline-block;
@@ -66,7 +66,7 @@ input[type="submit"] {
   transition: opacity .4s ease;
 }
 
-input[type="submit"]:hover {
+#search_submit:hover {
   opacity: 0.3;
 }
 
@@ -75,17 +75,14 @@ input[type="submit"]:hover {
 }
 
 .resulting-search {
-  margin: 200px 100px;
+  margin: 20px 540px;
   display: inline-block;
   position: relative;
-  height: 60px;
   float: left;
-  padding: 0;
   position: relative;
   line-height:30px;
-  background-color:#eeeeee;
+  background-color:#f6f6f6;
   height:100%;
   width:20%;
   float:right;
-  padding:0px;
 }

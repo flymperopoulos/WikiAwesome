@@ -14,7 +14,7 @@
       <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
 
       <!-- JS scripts -->
-      <script type="text/javascript" src="javascripts/root.js"></script>
+      <script type="text/javascript" src="javascripts/root.js"></script>  
 
       <title>Computer Languages</title>
     </head>
@@ -26,13 +26,15 @@
           <div class="navbar-header">
               <img class="navbar-brand" alt="Brand" src="img/logoNav.jpg" >
               <h5>Computer Languages Wikipedia</h5>
-            <!-- 
-              <form class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                  <input ng-model="first.greeting" class="form-control" placeholder="Search">
-                </div>
-              </form> -->
           </div>
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="#/newarticle">Create</a>
+            </li>
+            <li>
+              <img class="navbar-brand" src="img/addButton.png">
+            </li>
+          </ul>
         </div>
       </nav>
       
@@ -47,8 +49,9 @@
       </div>
       
       <div ng-class="searchResults" class="resulting-search">
-      {{languageName}}
+        {{languageName}}
       </div>
+      <div ng-view></div>
 
     </body>
 </html>
