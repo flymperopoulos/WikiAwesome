@@ -1,22 +1,11 @@
-// Requires path modulo and the models Person and Twotte
+var mongoose = require('mongoose');
 var path = require('path');
+var WikiArticle = require(path.join(__dirname,'../models/articleFile'));
 
-// ErrorHandler method
-function errorHandler(err, req, res, next) {
-  res.status(500);
-  res.render('error', { error: err });
-}
-
-// Initializes routes new object
 var routes = {};
 
-// index route served
-routes.home = function (req,res){
-	res.render("home", {"articleLinks": [
-	  "/awesome1",
-	  "/awesome2"
-	  ]
-	});
-}
+routes.home = function(req, res){
+	res.sendfile('./public/main.html')
+};
 
 module.exports = routes;
