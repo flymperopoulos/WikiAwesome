@@ -13,6 +13,9 @@
       <!-- CSS scripts -->
       <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
 
+      <!-- JS scripts -->
+      <script type="text/javascript" src="javascripts/root.js"></script>
+
       <title>Computer Languages</title>
     </head>
 
@@ -36,14 +39,14 @@
       <div id="wrap">
         <form action="/search" autocomplete="on">
 
-          <input id="search" name="languageName" type="text" ng-model="languageName" placeholder="What are you looking for ?">
+          <input ng-model="languageName" id="search" name="languageName" type="text" placeholder="What are you looking for ?">
 
           <input id="search_submit" value="Submit" type="submit">
 
         </form>
       </div>
       
-      <div ng-class="languageName" class="resulting-search">
+      <div ng-class="searchResults" class="resulting-search">
       {{languageName}}
       </div>
 
