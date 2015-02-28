@@ -32,7 +32,6 @@ app.controller("mainController", function($scope, $http, $location){
         $scope.articles.forEach(function (article){
             if (article.title === $scope.articleName){
                 $scope.match = true;
-                alert('lol');
                 $location.path('/getArticleWikiDetail');
             }
         })
@@ -83,8 +82,6 @@ app.controller('newWikiController', function($scope, $http, $location) {
 });
 
 app.controller('articleWikiDetailController', function($scope, $http){
-    $scope.message = "yooo";
-
     $scope.articleSearched = function (){
 
         $http.post('/articleWikiDetail', {title:$scope.articleName})
@@ -92,8 +89,8 @@ app.controller('articleWikiDetailController', function($scope, $http){
                 console.log("data", data);
                 console.log("status", status);
 
-                $scope.articleTitle=data.title;
-                $scope.articleContent = data.content;
+                $scope.articleSearchedTitle=data.title;
+                $scope.articleSearchedContent = data.content;
               })
 
             .error(function(data, status, headers, config) {
@@ -101,6 +98,6 @@ app.controller('articleWikiDetailController', function($scope, $http){
                 console.log("status", status);
               });
         }
-        
+
     $scope.articleSearched();
 });

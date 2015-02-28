@@ -87,6 +87,33 @@ body {
 }
 
 .articleList {
-  color: red;
+  color: #000000;
   position: right;
+  width: 10%;
+  padding-left: 30px;
+  background-color:#f6f6f6;
+}
+
+.wikiDetail {
+  margin: 20px 540px;
+  display: inline-block;
+  position: relative;
+  float: left;
+  position: relative;
+  line-height:30px;
+  height:100%;
+  width:20%;
+  float:right;
+}
+
+.newWikiArticleClass {
+  margin: 20px 540px;
+  display: inline-block;
+  position: relative;
+  float: left;
+  position: relative;
+  line-height:30px;
+  height:100%;
+  width:20%;
+  float:right;
 }

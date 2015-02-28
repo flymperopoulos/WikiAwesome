@@ -1,4 +1,13 @@
+<!-- Added this div here for the list to be present all the time -->
+
+<div class="articleList">
+	<div ng-repeat="article in articles">
+		{{article.title}}
+	</div>
+</div>
+
+<!-- Detailed Wiki Article will pop-up -->
 <div class="wikiDetail">
-	<h1>{{articleTitle}}</h1>
-	<p>{{articleContent}}</p>
+	<h1 style="color:#7f7fff">{{articleSearchedTitle}}</h1>
+	<p>{{articleSearchedContent}}</p>
 </div>

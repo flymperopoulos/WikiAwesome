@@ -44,14 +44,13 @@ routes.wikis = function (req, res){
 }
 
 routes.wikiDetail = function (req, res){
+	// it's only going to be the title sent through root.js
 	console.log(req.body);
-	console.log('OOOOOO');
 	WikiArticle.findOne({title:req.body.title}, function (err, article){
 		if (err) {
 			errorHandler(err, req, res);
 		} else {
 			res.json(article);
-			console.log('HAHAH',article);
 		}
 	})
 }
