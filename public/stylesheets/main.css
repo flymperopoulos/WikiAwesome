@@ -85,3 +85,8 @@ body {
   width:20%;
   float:right;
 }
+
+.articleList {
+  color: red;
+  position: right;
+}

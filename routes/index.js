@@ -9,7 +9,23 @@ routes.home = function(req, res){
 };
 
 routes.createWiki = function (req, res){
-	console.log(req.body);
+
+	articleTitle = req.body.title;
+	articleContent = req.body.content;
+
+	var newArticle = new WikiArticle({
+		title : articleTitle,
+		content : articleContent
+	});
+
+	newArticle.save(function (err, article){
+		if (err) {
+			errorHandler(err, req, res);
+		} else {
+			// sends article as json
+			res.json(article);
+		}
+	})
 }
 
 module.exports = routes;
