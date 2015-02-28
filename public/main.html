@@ -24,7 +24,7 @@
       <nav class="navbar navbar-default">
         <div class="container-fluid">
           <div class="navbar-header">
-              <img class="navbar-brand" alt="Brand" src="img/logoNav.jpg" >
+              <a href="#/"><img class="navbar-brand" alt="Brand" src="img/logoNav.jpg"></a>
               <h5>Computer Languages Wikipedia</h5>
           </div>
           <ul class="nav navbar-nav navbar-right">
@@ -40,11 +40,11 @@
       
       <!-- Search Bar -->
       <div id="wrap">
-        <form action="/searchWiki" autocomplete="on">
+        <form ng-click="search()" autocomplete="on">
 
           <input ng-model="articleName" id="search" name="languageName" type="text" placeholder="What are you looking for ?">
 
-          <input id="search_submit" ng-click="search()" value="Submit" type="submit">
+          <input id="search_submit" value="Submit" type="submit">
 
         </form>
       </div>

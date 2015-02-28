@@ -25,6 +25,7 @@ routes.createWiki = function (req, res){
 		if (err) {
 			errorHandler(err, req, res);
 		} else {
+
 			// sends article as json
 			res.json(article);
 		}
@@ -32,7 +33,6 @@ routes.createWiki = function (req, res){
 }
 
 routes.wikis = function (req, res){
-	console.log(req.body);
 
 	WikiArticle.find(function (err, wikis){
 		if (err) {
@@ -41,6 +41,19 @@ routes.wikis = function (req, res){
 			res.json(wikis);
 		}
 	});
+}
+
+routes.wikiDetail = function (req, res){
+	console.log(req.body);
+	console.log('OOOOOO');
+	WikiArticle.findOne({title:req.body.title}, function (err, article){
+		if (err) {
+			errorHandler(err, req, res);
+		} else {
+			res.json(article);
+			console.log('HAHAH',article);
+		}
+	})
 }
 
 module.exports = routes;

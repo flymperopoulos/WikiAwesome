@@ -7,19 +7,40 @@ app.config(function($routeProvider){
     // route to home page
       .when("/",
         {
-          templateUrl: "../htmlLayouts/home.html",
+          templateUrl: "../htmlLayouts/articleList.html",
           controller: "mainController"
         })
 
     // route to creation of new wiki form
       .when('/newarticle', {
-          templateUrl : '../htmlLayouts/newarticle.html',
+          templateUrl : '../htmlLayouts/newArticle.html',
           controller  : 'newWikiController'
       })
+
+      // route to creation of new wiki form
+        .when('/getArticleWikiDetail', {
+            templateUrl : '../htmlLayouts/wikiArticleDetail.html',
+            controller  : 'articleWikiDetailController'
+        })
 });
 
-app.controller("mainController", function($scope, $http){
-    $scope.snip = "yo";
+app.controller("mainController", function($scope, $http, $location){
+    
+    $scope.search = function (){
+        $scope.match = false;
+        
+        $scope.articles.forEach(function (article){
+            if (article.title === $scope.articleName){
+                $scope.match = true;
+                alert('lol');
+                $location.path('/getArticleWikiDetail');
+            }
+        })
+
+        if (!$scope.match){
+            $location.path('/');
+        }
+    }
 
     $scope.wikis = function (){
 
@@ -38,7 +59,7 @@ app.controller("mainController", function($scope, $http){
 
     // method with all our stuff from get request
     $scope.wikis();
-    
+
 });
 
 app.controller('newWikiController', function($scope, $http, $location) {
@@ -61,3 +82,25 @@ app.controller('newWikiController', function($scope, $http, $location) {
     } 
 });
 
+app.controller('articleWikiDetailController', function($scope, $http){
+    $scope.message = "yooo";
+
+    $scope.articleSearched = function (){
+
+        $http.post('/articleWikiDetail', {title:$scope.articleName})
+            .success(function(data, status, headers, config) {
+                console.log("data", data);
+                console.log("status", status);
+
+                $scope.articleTitle=data.title;
+                $scope.articleContent = data.content;
+              })
+
+            .error(function(data, status, headers, config) {
+                console.log("data", data);
+                console.log("status", status);
+              });
+        }
+        
+    $scope.articleSearched();
+});

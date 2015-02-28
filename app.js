@@ -23,6 +23,7 @@ app.get("/wikis", index.wikis);
 
 // POST requests
 app.post("/createWiki", index.createWiki);
+app.post("/articleWikiDetail", index.wikiDetail);
 
 mongoose.connect(mongoURI);
 
