@@ -80,8 +80,8 @@ body {
   float: left;
   position: relative;
   line-height:30px;
-  background-color:#f6f6f6;
   height:100%;
+  /*visibility: visible;*/
   width:20%;
   float:right;
 }
@@ -117,4 +117,21 @@ body {
   height:100%;
   width:20%;
   float:right;
+}
+
+input{
+  font-family: "Lato";
+}
+
+#titleForNewLang {
+  font-family: "Lato";
+}
+
+label {
+    /* Other styling.. */
+    text-align: right;
+    clear: both;
+    font-family: "Lato";
+    float:left;
+    margin-right:15px;
 }

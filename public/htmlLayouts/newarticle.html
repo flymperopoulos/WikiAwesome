@@ -5,8 +5,9 @@
 </div>
 
 <div class="newWikiArticleClass">
-	<h3>Create a new language</h3>
-	Title : <input type="text" ng-model="articleTitle" id="newTitle" name="ArticleTitle"> <br>
-	Message : <input type="text" ng-model="articleContent" id="newContent" name="ArticleContent"> <br>
+	<h3 id="titleForNewLang">Create a new language</h3>
+	<label for="ArticleTitle">Title: </label> <input type="text" ng-model="articleTitle" id="newTitle" name="ArticleTitle"> <br>
+	<label for="ArticleContent">Content: </label> <input type="text" ng-model="articleContent" id="newContent" name="ArticleContent"> <br>
+	<!-- <label for="pic">Upload Image: </label> <input type="file" name="pic" accept="image/*"> <br> -->
 	<button type="button" action="submit" ng-click="submitNewArticle()" class="btn btn-info">Submit</button>
 </div>

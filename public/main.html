@@ -31,9 +31,9 @@
             <li>
               <a href="#/newarticle">Create</a>
             </li>
-            <li>
+            <!--<li>
               <img class="navbar-brand" src="img/addButton.png">
-            </li>
+            </li> -->
           </ul>
         </div>
       </nav>
@@ -49,9 +49,10 @@
         </form>
       </div>
       
-      <div ng-class="searchResults" class="resulting-search">
-        {{articleName}}
-      </div>
+      <!-- Commented interactive search out for now -->
+      <!--<div ng-class="searchResults" class="resulting-search" style="visibility:invisible">
+        Searching for {{articleName}}
+      </div> -->
       <div ng-view></div>
 
     </body>
