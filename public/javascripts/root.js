@@ -18,16 +18,30 @@ app.config(function($routeProvider){
       })
 });
 
-app.controller("mainController", function($scope){
-    $scope.snip = "yo"
-    // $scope.search = function(){
-    //     console.log('Searching...')
-    //         var found = false;
-    //         })
-    //     };
+app.controller("mainController", function($scope, $http){
+    $scope.snip = "yo";
+
+    $scope.wikis = function (){
+
+        $http.get('/wikis')
+            .success(function(data, status, headers, config) {
+                console.log("data", data);
+                console.log("status", status);
+                $scope.articles=data
+              })
+
+            .error(function(data, status, headers, config) {
+                console.log("data", data);
+                console.log("status", status);
+              });
+        }
+
+    // method with all our stuff from get request
+    $scope.wikis();
+    
 });
 
-app.controller('newWikiController', function($scope, $http) {
+app.controller('newWikiController', function($scope, $http, $location) {
     $scope.submitNewArticle= function(){ 
         var ArticleX = {
             title : $scope.articleTitle,
@@ -38,7 +52,7 @@ app.controller('newWikiController', function($scope, $http) {
         .success(function(data, status, headers, config) {
             console.log("data", data);
             console.log("status", status);
-
+            $location.path('/');
           })
         .error(function(data, status, headers, config) {
             console.log("data", data);
