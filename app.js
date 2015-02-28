@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/", index.home);
 
 // POST requests
-app.post('#/createWiki', index.createWiki);
+app.post('/createWiki', index.createWiki);
 
 mongoose.connect(mongoURI);
 

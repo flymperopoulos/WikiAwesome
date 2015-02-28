@@ -5,9 +5,9 @@ app.config(function($routeProvider){
   $routeProvider
 
     // route to home page
-      .when("#/",
+      .when("/",
         {
-          templateUrl: "../main.html",
+          templateUrl: "../htmlLayouts/home.html",
           controller: "mainController"
         })
 
@@ -19,18 +19,22 @@ app.config(function($routeProvider){
 });
 
 app.controller("mainController", function($scope){
-    // do stuff with searching here
+    $scope.snip = "yo"
+    // $scope.search = function(){
+    //     console.log('Searching...')
+    //         var found = false;
+    //         })
+    //     };
 });
 
-app.controller('newWikiController', ['$http',function($scope, $http) {
-    $scope.message = 'New Wiki Article Created';
+app.controller('newWikiController', function($scope, $http) {
     $scope.submitNewArticle= function(){ 
         var ArticleX = {
             title : $scope.articleTitle,
             content: $scope.articleContent
         };
 
-    $http.post("/createWiki", formData)
+    $http.post("/createWiki", ArticleX)
         .success(function(data, status, headers, config) {
             console.log("data", data);
             console.log("status", status);
@@ -41,4 +45,5 @@ app.controller('newWikiController', ['$http',function($scope, $http) {
             console.log("status", status);
           });
     } 
-}]);
+});
+

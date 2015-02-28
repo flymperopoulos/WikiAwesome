@@ -38,18 +38,19 @@
         </div>
       </nav>
       
+      <!-- Search Bar -->
       <div id="wrap">
-        <form action="/search" autocomplete="on">
+        <form action="/searchWiki" autocomplete="on">
 
-          <input ng-model="languageName" id="search" name="languageName" type="text" placeholder="What are you looking for ?">
+          <input ng-model="articleName" id="search" name="languageName" type="text" placeholder="What are you looking for ?">
 
-          <input id="search_submit" value="Submit" type="submit">
+          <input id="search_submit" ng-click="search()" value="Submit" type="submit">
 
         </form>
       </div>
       
       <div ng-class="searchResults" class="resulting-search">
-        {{languageName}}
+        {{articleName}}
       </div>
       <div ng-view></div>
 
