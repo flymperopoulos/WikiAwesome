@@ -66,6 +66,7 @@ app.controller('newWikiController', function($scope, $http, $location) {
         var ArticleX = {
             title : $scope.articleTitle,
             content: $scope.articleContent
+            // image : $scope.articleImage
         };
 
     $http.post("/createWiki", ArticleX)
@@ -91,6 +92,7 @@ app.controller('articleWikiDetailController', function($scope, $http){
 
                 $scope.articleSearchedTitle=data.title;
                 $scope.articleSearchedContent = data.content;
+                // $scope.articleSearchedImage = data.image;
               })
 
             .error(function(data, status, headers, config) {
