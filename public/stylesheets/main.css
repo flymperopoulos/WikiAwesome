@@ -119,6 +119,18 @@ body {
   float:right;
 }
 
+.editArticleClass {
+  margin: 20px 540px;
+  display: inline-block;
+  position: relative;
+  float: left;
+  position: relative;
+  line-height:30px;
+  height:100%;
+  width:20%;
+  float:right;
+}
+
 input{
   font-family: "Lato";
 }

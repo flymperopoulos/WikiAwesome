@@ -57,4 +57,15 @@ routes.wikiDetail = function (req, res){
 	})
 }
 
+routes.editWiki = function (req,res){
+	console.log('blablablabbal ',req.body);
+
+	WikiArticle.update({title:req.body.title}, req.body, function (err, newArticle){
+		if (err){
+			console.log(err);
+		}
+		res.json(newArticle);
+	})
+}
+
 module.exports = routes;

@@ -17,7 +17,7 @@ app.config(function($routeProvider){
           controller  : 'newWikiController'
       })
 
-      // route to creation of new wiki form
+    // route to creation of new wiki form
         .when('/getArticleWikiDetail', {
             templateUrl : '../htmlLayouts/wikiArticleDetail.html',
             controller  : 'articleWikiDetailController'
@@ -30,7 +30,7 @@ app.controller("mainController", function($scope, $http, $location){
         $scope.match = false;
         
         $scope.articles.forEach(function (article){
-            if (article.title === $scope.articleName){
+            if (article.title === $scope.articleName && $scope.articleName.length>0){
                 $scope.match = true;
                 $location.path('/getArticleWikiDetail');
             }
@@ -82,7 +82,39 @@ app.controller('newWikiController', function($scope, $http, $location) {
     } 
 });
 
-app.controller('articleWikiDetailController', function($scope, $http){
+app.controller('articleWikiDetailController', function($scope, $http, $location){
+    $scope.showProperty = true;
+    
+    $scope.editDetailArticle = function(){
+        $scope.showProperty = false;
+        console.log("inside edit button");
+
+        $scope.articleTitleNew = $scope.articleSearchedTitle;
+        $scope.articleContentNew = $scope.articleSearchedContent;
+
+    }
+
+    $scope.editingArticle = function(){
+        var newArticleX = {
+            title : $scope.articleTitleNew,
+            content : $scope.articleContentNew
+        }
+
+        $http.post("/editWiki", newArticleX)
+            .success(function(data, status, headers, config) {
+                console.log("data", data);
+                console.log("status", status);
+                $scope.showProperty = true;
+                $scope.articleSearchedTitle = $scope.articleTitleNew;
+                $scope.articleSearchedContent = $scope.articleContentNew;
+
+              })
+            .error(function(data, status, headers, config) {
+                console.log("data", data);
+                console.log("status", status);
+              });
+    }
+
     $scope.articleSearched = function (){
 
         $http.post('/articleWikiDetail', {title:$scope.articleName})
@@ -101,5 +133,6 @@ app.controller('articleWikiDetailController', function($scope, $http){
               });
         }
 
+    $scope.editingArticle();
     $scope.articleSearched();
 });

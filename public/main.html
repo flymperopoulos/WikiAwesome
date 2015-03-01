@@ -40,11 +40,11 @@
       
       <!-- Search Bar -->
       <div id="wrap">
-        <form ng-click="search()" autocomplete="on">
+        <form autocomplete="on">
 
           <input ng-model="articleName" id="search" name="languageName" type="text" placeholder="What are you looking for ?">
 
-          <input id="search_submit" value="Submit" type="submit">
+          <input id="search_submit" ng-click="search()" value="Submit" type="submit">
 
         </form>
       </div>
