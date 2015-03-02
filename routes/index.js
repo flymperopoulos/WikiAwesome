@@ -11,14 +11,14 @@ routes.home = function(req, res){
 routes.createWiki = function (req, res){
 
 	// grabs data from request json body
-	articleTitle = req.body.title;
-	articleContent = req.body.content;
+	var articleTitle = req.body.title;
+	var articleContent = req.body.content;
 	// articleImage = req.body.image;
 
 	// creates new wikiArticle
 	var newArticle = new WikiArticle({
 		title : articleTitle,
-		content : articleContent,
+		content : articleContent
 		// image : articleImage
 	});
 
@@ -60,7 +60,7 @@ routes.wikiDetail = function (req, res){
 routes.editWiki = function (req,res){
 	console.log('blablablabbal ',req.body);
 
-	WikiArticle.update({title:req.body.title}, req.body, function (err, newArticle){
+	WikiArticle.update({title:req.body.title}, {title:req.body.newTitle,content: req.body.content}, function (err, newArticle){
 		if (err){
 			console.log(err);
 		}

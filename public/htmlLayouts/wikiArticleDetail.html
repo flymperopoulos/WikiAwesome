@@ -1,17 +1,11 @@
 <!-- Added this div here for the list to be present all the time -->
 
-<div class="articleList">
-	<div ng-repeat="article in articles">
-		{{article.title}}
-	</div>
-</div>
-
 <!-- Detailed Wiki Article will pop-up -->
 <div class="wikiDetail" ng-show="showProperty">
 	<h1 style="color:#7f7fff">{{articleSearchedTitle}}</h1>
 	<p>{{articleSearchedContent}}</p> <br>
 	<button type="button" action="submit" ng-click="editDetailArticle()" class="btn btn-info">Edit</button>
-	<!-- {{articleSearchedImage}} -->
+	{{articleSearchedImage}}
 </div>
 
 <div class="editArticleClass" ng-hide="showProperty">

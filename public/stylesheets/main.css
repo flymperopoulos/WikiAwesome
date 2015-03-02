@@ -93,6 +93,7 @@ body {
   padding-left: 30px;
   background-color:#f6f6f6;
   cursor: pointer;
+  display: inline-block;
 }
 
 .wikiDetail {

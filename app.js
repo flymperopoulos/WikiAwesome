@@ -18,13 +18,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 // GET requests
-app.get("/", index.home);
 app.get("/wikis", index.wikis);
 
 // POST requests
 app.post("/createWiki", index.createWiki);
 app.post("/articleWikiDetail", index.wikiDetail);
 app.post("/editWiki", index.editWiki);
+
+
+app.get("*", index.home);
 
 mongoose.connect(mongoURI);
 

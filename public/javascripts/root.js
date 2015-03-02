@@ -1,13 +1,12 @@
 var app = angular.module('app', ['ngRoute']);
 
-app.config(function($routeProvider){
+app.config(function($routeProvider, $locationProvider){
 
   $routeProvider
 
     // route to home page
       .when("/",
         {
-          templateUrl: "../htmlLayouts/articleList.html",
           controller: "mainController"
         })
 
@@ -18,10 +17,12 @@ app.config(function($routeProvider){
       })
 
     // route to creation of new wiki form
-        .when('/getArticleWikiDetail', {
+        .when('/:name', {
             templateUrl : '../htmlLayouts/wikiArticleDetail.html',
             controller  : 'articleWikiDetailController'
-        })
+        });
+
+        $locationProvider.html5Mode(true);
 });
 
 app.controller("mainController", function($scope, $http, $location){
@@ -32,7 +33,7 @@ app.controller("mainController", function($scope, $http, $location){
         $scope.articles.forEach(function (article){
             if (article.title === $scope.articleName && $scope.articleName.length>0){
                 $scope.match = true;
-                $location.path('/getArticleWikiDetail');
+                $location.path('/'+$scope.articleName);
             }
         })
 
@@ -73,30 +74,35 @@ app.controller('newWikiController', function($scope, $http, $location) {
         .success(function(data, status, headers, config) {
             console.log("data", data);
             console.log("status", status);
+            console.log("cock ", $scope.articles);
+            $scope.articles.push(data);
             $location.path('/');
+
+
           })
         .error(function(data, status, headers, config) {
             console.log("data", data);
             console.log("status", status);
           });
-    } 
+    }
+
 });
 
-app.controller('articleWikiDetailController', function($scope, $http, $location){
+app.controller('articleWikiDetailController', function($scope, $http, $location, $routeParams){
     $scope.showProperty = true;
-    
+
     $scope.editDetailArticle = function(){
         $scope.showProperty = false;
         console.log("inside edit button");
 
         $scope.articleTitleNew = $scope.articleSearchedTitle;
         $scope.articleContentNew = $scope.articleSearchedContent;
-
     }
 
     $scope.editingArticle = function(){
         var newArticleX = {
-            title : $scope.articleTitleNew,
+            title : $scope.articleSearchedTitle,
+            newTitle : $scope.articleTitleNew,
             content : $scope.articleContentNew
         }
 
@@ -104,6 +110,11 @@ app.controller('articleWikiDetailController', function($scope, $http, $location)
             .success(function(data, status, headers, config) {
                 console.log("data", data);
                 console.log("status", status);
+                $scope.articles.forEach(function(article){
+                    if (article.title === $scope.articleSearchedTitle){
+                        article.title = $scope.articleTitleNew;
+                    }
+                })
                 $scope.showProperty = true;
                 $scope.articleSearchedTitle = $scope.articleTitleNew;
                 $scope.articleSearchedContent = $scope.articleContentNew;
@@ -117,7 +128,7 @@ app.controller('articleWikiDetailController', function($scope, $http, $location)
 
     $scope.articleSearched = function (){
 
-        $http.post('/articleWikiDetail', {title:$scope.articleName})
+        $http.post('/articleWikiDetail', {title:$routeParams.name})
             .success(function(data, status, headers, config) {
                 console.log("data", data);
                 console.log("status", status);
@@ -133,6 +144,5 @@ app.controller('articleWikiDetailController', function($scope, $http, $location)
               });
         }
 
-    $scope.editingArticle();
     $scope.articleSearched();
 });

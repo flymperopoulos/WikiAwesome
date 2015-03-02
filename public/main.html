@@ -29,11 +29,8 @@
           </div>
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a href="#/newarticle">Create</a>
+              <a href="/#/newarticle">Create</a>
             </li>
-            <!--<li>
-              <img class="navbar-brand" src="img/addButton.png">
-            </li> -->
           </ul>
         </div>
       </nav>
@@ -47,6 +44,12 @@
           <input id="search_submit" ng-click="search()" value="Submit" type="submit">
 
         </form>
+      </div>
+
+      <div class="articleList">
+        <div ng-repeat="article in articles">
+          <a href="/#/{{article.title}}">{{article.title}}</a>
+        </div>
       </div>
       
       <!-- Commented interactive search out for now -->
