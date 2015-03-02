@@ -13,13 +13,13 @@ routes.createWiki = function (req, res){
 	// grabs data from request json body
 	var articleTitle = req.body.title;
 	var articleContent = req.body.content;
-	// articleImage = req.body.image;
+	articleImage = req.body.image;
 
 	// creates new wikiArticle
 	var newArticle = new WikiArticle({
 		title : articleTitle,
-		content : articleContent
-		// image : articleImage
+		content : articleContent,
+		image : articleImage
 	});
 
 	// saves wikiArticle and sends responce json

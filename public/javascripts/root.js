@@ -12,7 +12,7 @@ app.config(function($routeProvider, $locationProvider){
 
     // route to creation of new wiki form
       .when('/newarticle', {
-          templateUrl : '../htmlLayouts/newArticle.html',
+          templateUrl : '../htmlLayouts/newarticle.html',
           controller  : 'newWikiController'
       })
 
@@ -66,9 +66,11 @@ app.controller('newWikiController', function($scope, $http, $location) {
     $scope.submitNewArticle= function(){ 
         var ArticleX = {
             title : $scope.articleTitle,
-            content: $scope.articleContent
-            // image : $scope.articleImage
+            content: $scope.articleContent,
+            image : $scope.articleImage
         };
+
+        console.log($scope.articleImage);
 
     $http.post("/createWiki", ArticleX)
         .success(function(data, status, headers, config) {
