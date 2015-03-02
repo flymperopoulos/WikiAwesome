@@ -25,7 +25,6 @@ app.post("/createWiki", index.createWiki);
 app.post("/articleWikiDetail", index.wikiDetail);
 app.post("/editWiki", index.editWiki);
 
-
 app.get("*", index.home);
 
 mongoose.connect(mongoURI);

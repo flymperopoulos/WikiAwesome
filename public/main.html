@@ -24,10 +24,13 @@
       <nav class="navbar navbar-default">
         <div class="container-fluid">
           <div class="navbar-header">
-              <a href="#/"><img class="navbar-brand" alt="Brand" src="img/logoNav.jpg"></a>
+              <a href="/#/"><img class="navbar-brand" alt="Brand" src="img/logoNav.jpg"></a>
               <h5>Computer Languages Wikipedia</h5>
           </div>
           <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/#/{{randomArticleSelected.title}}" ng-click="randomArticleSubmit()">Random Article</a>
+            </li>
             <li>
               <a href="/#/newarticle">Create</a>
             </li>

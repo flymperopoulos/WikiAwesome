@@ -25,7 +25,7 @@ app.config(function($routeProvider, $locationProvider){
         $locationProvider.html5Mode(true);
 });
 
-app.controller("mainController", function($scope, $http, $location){
+app.controller("mainController", function($scope, $http, $location, $routeParams){
     
     $scope.search = function (){
         $scope.match = false;
@@ -42,6 +42,11 @@ app.controller("mainController", function($scope, $http, $location){
             $scope.createdFromSearch = true;
             $scope.articleTitle = $scope.articleName;
         }
+    }
+
+    $scope.randomArticleSubmit = function (){
+        $scope.randomArticleSelected = $scope.articles[Math.floor(Math.random()*$scope.articles.length)];
+        $location.path('/' + $scope.randomArticleSelected.title);
     }
 
     $scope.wikis = function (){
@@ -65,6 +70,7 @@ app.controller("mainController", function($scope, $http, $location){
 });
 
 app.controller('newWikiController', function($scope, $http, $location) {
+
     $scope.submitNewArticle= function(){ 
         var ArticleX = {
             title : $scope.articleTitle,
@@ -81,9 +87,8 @@ app.controller('newWikiController', function($scope, $http, $location) {
             console.log("cock ", $scope.articles);
             $scope.articles.push(data);
             $location.path('/');
-
-
           })
+
         .error(function(data, status, headers, config) {
             console.log("data", data);
             console.log("status", status);
