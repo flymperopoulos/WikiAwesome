@@ -1,5 +1,6 @@
 <div class="newWikiArticleClass">
 	<h3 id="titleForNewLang">Create a new language</h3>
+	<h5 ng-show="createdFromSearch" style="color:red">Article doesn't exist, but you can make one, fucker!</h5>
 	<label for="ArticleTitle">Title: </label> <input type="text" ng-model="articleTitle" id="newTitle" name="ArticleTitle"> <br>
 	<label for="ArticleContent">Content: </label> <input type="text" ng-model="articleContent" id="newContent" name="ArticleContent"> <br>
 	<label for="pic">Upload Image: </label> <input type="file" ng-model="articleImage" name="pic" accept="image/*"> <br>

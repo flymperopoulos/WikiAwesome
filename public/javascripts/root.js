@@ -38,7 +38,9 @@ app.controller("mainController", function($scope, $http, $location){
         })
 
         if (!$scope.match){
-            $location.path('/');
+            $location.path('/newarticle');
+            $scope.createdFromSearch = true;
+            $scope.articleTitle = $scope.articleName;
         }
     }
 
