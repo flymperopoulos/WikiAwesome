@@ -25,18 +25,24 @@ app.config(function($routeProvider, $locationProvider){
         $locationProvider.html5Mode(true);
 });
 
+// controller for the main controller
 app.controller("mainController", function($scope, $http, $location, $routeParams){
     
+    // search for directive ng-click
     $scope.search = function (){
         $scope.match = false;
         
+        // loops through articles and checks if searched one exists
         $scope.articles.forEach(function (article){
             if (article.title === $scope.articleName && $scope.articleName.length>0){
                 $scope.match = true;
+
+                // relocate to the route of the article searched
                 $location.path('/'+$scope.articleName);
             }
         })
 
+        // if the searched article doesn't exist, make it
         if (!$scope.match){
             $location.path('/newarticle');
             $scope.createdFromSearch = true;
@@ -44,11 +50,14 @@ app.controller("mainController", function($scope, $http, $location, $routeParams
         }
     }
 
+    // random article method 
     $scope.randomArticleSubmit = function (){
+        // randomly selects from the list of articles
         $scope.randomArticleSelected = $scope.articles[Math.floor(Math.random()*$scope.articles.length)];
         $location.path('/' + $scope.randomArticleSelected.title);
     }
 
+    // gets tikis and sets the articles equal to the data
     $scope.wikis = function (){
 
         $http.get('/wikis')
@@ -69,8 +78,10 @@ app.controller("mainController", function($scope, $http, $location, $routeParams
 
 });
 
+// controller for new wiki creation
 app.controller('newWikiController', ['$scope','$upload','$http','$location','$timeout', function($scope, $upload, $http, $location, $timeout) {
     
+    // upload image method
     function uploadUsing$upload(file) {
         console.log(file);
         file.upload = $upload.upload({
@@ -96,12 +107,14 @@ app.controller('newWikiController', ['$scope','$upload','$http','$location','$ti
         });
     }
 
+    // submit new article method from directive in html
     $scope.submitNewArticle = function($files){ 
         var ArticleX = {
             title : $scope.articleTitle,
             content: $scope.articleContent
         };
 
+        // posts new wiki
         $http.post("/createWiki", ArticleX)
             .success(function(data, status, headers, config) {
                 console.log("data", data);
@@ -125,6 +138,7 @@ app.controller('newWikiController', ['$scope','$upload','$http','$location','$ti
 
 }]);
 
+// controller for the each detailed description of wiki
 app.controller('articleWikiDetailController', ['$scope','$upload','$http','$location','$timeout','$routeParams','$window', function($scope, $upload, $http, $location, $timeout,$routeParams,$window){
     $scope.showProperty = true;
 
@@ -156,7 +170,6 @@ app.controller('articleWikiDetailController', ['$scope','$upload','$http','$loca
 
     $scope.editDetailArticle = function(){
         $scope.showProperty = false;
-        console.log("inside edit button");
 
         $scope.articleTitleNew = $scope.articleSearchedTitle;
         $scope.articleContentNew = $scope.articleSearchedContent;
@@ -185,11 +198,6 @@ app.controller('articleWikiDetailController', ['$scope','$upload','$http','$loca
                 }else{
                     $scope.showProperty = true;
                 }
-                
-                
-
-                
-
               })
             .error(function(data, status, headers, config) {
                 console.log("data", data);
@@ -197,6 +205,7 @@ app.controller('articleWikiDetailController', ['$scope','$upload','$http','$loca
               });
     }
 
+    // method to show the the article detail searched
     $scope.articleSearched = function (){
 
         $http.post('/articleWikiDetail', {title:$routeParams.name})

@@ -28,6 +28,7 @@ app.post("/articleWikiDetail", index.wikiDetail);
 app.post("/editWiki", index.editWiki);
 app.post("/imageUpload", index.imageUpload);
 
+// main get request
 app.get("*", index.home);
 
 mongoose.connect(mongoURI);
