@@ -16,7 +16,7 @@ app.config(function($routeProvider, $locationProvider){
           controller  : 'newWikiController'
       })
 
-    // route to creation of new wiki form
+    // route to creation of wiki detail form
         .when('/:name', {
             templateUrl : '../htmlLayouts/wikiArticleDetail.html',
             controller  : 'articleWikiDetailController'
