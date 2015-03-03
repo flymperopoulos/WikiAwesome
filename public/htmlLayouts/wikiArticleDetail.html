@@ -1,15 +1,16 @@
 <!-- Added this div here for the list to be present all the time -->
 
 <!-- Detailed Wiki Article will pop-up -->
-<div class="wikiDetail" ng-show="showProperty">
+<div class="wikiDetail insert" ng-show="showProperty">
 	<h1 style="color:#7f7fff">{{articleSearchedTitle}}</h1>
+	<img class="article-image" ng-src = "{{articleSearchedImage}}"/>
 	<p>{{articleSearchedContent}}</p> <br>
 	<button type="button" action="submit" ng-click="editDetailArticle()" class="btn btn-info">Edit</button>
-	{{articleSearchedImage}}
+	
 </div>
 
-<div class="editArticleClass" ng-hide="showProperty">
+<div class="editArticleClass insert" ng-hide="showProperty">
 	<label for="ArticleTitle">Title: </label> <input type="text" ng-model="articleTitleNew" id="newTitle" name="ArticleTitle"> <br>
-	<label for="ArticleContent">Content: </label> <input type="text" ng-model="articleContentNew" id="newContent" name="ArticleContent"> <br>
+	<textarea type="text" ng-model="articleContentNew" id="newContent" name="ArticleContent"/> <br>
 	<button type="button" action="submit" ng-click="editingArticle()" class="btn btn-info">Done</button>
 </div>

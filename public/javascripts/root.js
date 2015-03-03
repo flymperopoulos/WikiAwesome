@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngRoute']);
+var app = angular.module('app', ['ngRoute','ngFileUpload']);
 
 app.config(function($routeProvider, $locationProvider){
 
@@ -69,25 +69,54 @@ app.controller("mainController", function($scope, $http, $location, $routeParams
 
 });
 
-app.controller('newWikiController', function($scope, $http, $location) {
+app.controller('newWikiController', ['$scope','$upload','$http','$location','$timeout', function($scope, $upload, $http, $location, $timeout) {
+    
+    function uploadUsing$upload(file) {
+        file.name = $scope.articleTitle;
+        console.log(file);
+        file.upload = $upload.upload({
+            url: '/imageupload',
+            method: 'POST',
+            fields: {title: $scope.articleTitle},
+            file: file
+        });
 
-    $scope.submitNewArticle= function(){ 
+        file.upload.then(function(response) {
+            $timeout(function() {
+                file.result = response.data;
+                $location.path('/'+$scope.articleTitle);
+            });
+        }, function(response) {
+            if (response.status > 0)
+                $scope.errorMsg = response.status + ': ' + response.data;
+        });
+
+        file.upload.progress(function(evt) {
+            // Math.min is to fix IE which reports 200% sometimes
+            file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+        });
+    }
+
+    $scope.submitNewArticle = function($files){ 
         var ArticleX = {
             title : $scope.articleTitle,
-            content: $scope.articleContent,
-            image : $scope.articleImage
+            content: $scope.articleContent
         };
 
-        console.log($scope.articleImage);
+        $http.post("/createWiki", ArticleX)
+            .success(function(data, status, headers, config) {
+                console.log("data", data);
+                console.log("status", status);
+                $scope.articles.push(data);
+                console.log("files",$files);
+                if ($files != null) {
+                    uploadUsing$upload($files[0]);
+                }else{
+                    $location.path('/'+$scope.articleTitle);
+                }
 
-    $http.post("/createWiki", ArticleX)
-        .success(function(data, status, headers, config) {
-            console.log("data", data);
-            console.log("status", status);
-            console.log("cock ", $scope.articles);
-            $scope.articles.push(data);
-            $location.path('/');
-          })
+                
+        })
 
         .error(function(data, status, headers, config) {
             console.log("data", data);
@@ -95,7 +124,7 @@ app.controller('newWikiController', function($scope, $http, $location) {
           });
     }
 
-});
+}]);
 
 app.controller('articleWikiDetailController', function($scope, $http, $location, $routeParams){
     $scope.showProperty = true;
@@ -144,13 +173,18 @@ app.controller('articleWikiDetailController', function($scope, $http, $location,
 
                 $scope.articleSearchedTitle=data.title;
                 $scope.articleSearchedContent = data.content;
-                // $scope.articleSearchedImage = data.image;
-              })
+                if(data.image){
+                    var u8 = new Uint8Array(data.image.data);
+                    var b64encoded = btoa(String.fromCharCode.apply(null, u8));
+                    console.log(b64encoded);
+                    $scope.articleSearchedImage = 'data:'+data.image.contentType+';base64,'+b64encoded;
+                }
+            })
 
             .error(function(data, status, headers, config) {
                 console.log("data", data);
                 console.log("status", status);
-              });
+            });
         }
 
     $scope.articleSearched();
