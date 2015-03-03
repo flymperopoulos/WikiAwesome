@@ -72,12 +72,12 @@ app.controller("mainController", function($scope, $http, $location, $routeParams
 app.controller('newWikiController', ['$scope','$upload','$http','$location','$timeout', function($scope, $upload, $http, $location, $timeout) {
     
     function uploadUsing$upload(file) {
+        file.name = $scope.articleTitle;
+        console.log(file);
         file.upload = $upload.upload({
             url: '/imageupload',
             method: 'POST',
-            headers: {
-                
-            },
+            fields: {title: $scope.articleTitle},
             file: file
         });
 
@@ -107,8 +107,6 @@ app.controller('newWikiController', ['$scope','$upload','$http','$location','$ti
             .success(function(data, status, headers, config) {
                 console.log("data", data);
                 console.log("status", status);
-
-
                 $scope.articles.push(data);
                 console.log("files",$files);
                 if ($files != null) {
@@ -175,13 +173,18 @@ app.controller('articleWikiDetailController', function($scope, $http, $location,
 
                 $scope.articleSearchedTitle=data.title;
                 $scope.articleSearchedContent = data.content;
-                // $scope.articleSearchedImage = data.image;
-              })
+                if(data.image){
+                    var u8 = new Uint8Array(data.image.data);
+                    var b64encoded = btoa(String.fromCharCode.apply(null, u8));
+                    console.log(b64encoded);
+                    $scope.articleSearchedImage = 'data:'+data.image.contentType+';base64,'+b64encoded;
+                }
+            })
 
             .error(function(data, status, headers, config) {
                 console.log("data", data);
                 console.log("status", status);
-              });
+            });
         }
 
     $scope.articleSearched();

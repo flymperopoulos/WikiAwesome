@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var path = require('path');
+var fs = require('fs');
 var WikiArticle = require(path.join(__dirname,'../models/articleFile'));
 
 var routes = {};
@@ -65,13 +66,20 @@ routes.editWiki = function (req,res){
 			console.log(err);
 		}
 		res.json(newArticle);
-	})
+	});
 }
 
 routes.imageUpload = function (req,res){
 	console.log(req.files);
 	console.log(req.body);
-	res.send('ok')
+	var data = fs.readFileSync(req.files.file.path);
+	WikiArticle.update({title:req.body.title},{image:{data:data,contentType:req.files.file.mimetype}},function(err,data){
+		if(err){res.status(500).send('Failed');}
+		else{res.send('ok');}
+	});
+
+	
 }
+
 
 module.exports = routes;
