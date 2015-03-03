@@ -12,5 +12,6 @@
 <div class="editArticleClass insert" ng-hide="showProperty">
 	<label for="ArticleTitle">Title: </label> <input type="text" ng-model="articleTitleNew" id="newTitle" name="ArticleTitle"> <br>
 	<textarea type="text" ng-model="articleContentNew" id="newContent" name="ArticleContent"/> <br>
-	<button type="button" action="submit" ng-click="editingArticle()" class="btn btn-info">Done</button>
+	<label for="pic">Upload Image: </label> <input id="imagein" type="file" ng-file-select ng-model="picFile" required name="file" accept="image/*" > <br> <br>
+	<button type="button" action="submit" ng-click="editingArticle(picFile)" class="btn btn-info">Done</button>
 </div>

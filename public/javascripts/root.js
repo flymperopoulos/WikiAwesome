@@ -72,7 +72,6 @@ app.controller("mainController", function($scope, $http, $location, $routeParams
 app.controller('newWikiController', ['$scope','$upload','$http','$location','$timeout', function($scope, $upload, $http, $location, $timeout) {
     
     function uploadUsing$upload(file) {
-        file.name = $scope.articleTitle;
         console.log(file);
         file.upload = $upload.upload({
             url: '/imageupload',
@@ -126,8 +125,34 @@ app.controller('newWikiController', ['$scope','$upload','$http','$location','$ti
 
 }]);
 
-app.controller('articleWikiDetailController', function($scope, $http, $location, $routeParams){
+app.controller('articleWikiDetailController', ['$scope','$upload','$http','$location','$timeout','$routeParams','$window', function($scope, $upload, $http, $location, $timeout,$routeParams,$window){
     $scope.showProperty = true;
+
+    function uploadUsing$upload(file) {
+        console.log(file);
+        file.upload = $upload.upload({
+            url: '/imageupload',
+            method: 'POST',
+            fields: {title: $scope.articleTitleNew},
+            file: file
+        });
+
+        file.upload.then(function(response) {
+            $timeout(function() {
+                file.result = response.data;
+                $scope.showProperty = true;
+                $window.location.reload();
+            });
+        }, function(response) {
+            if (response.status > 0)
+                $scope.errorMsg = response.status + ': ' + response.data;
+        });
+
+        file.upload.progress(function(evt) {
+            // Math.min is to fix IE which reports 200% sometimes
+            file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+        });
+    }
 
     $scope.editDetailArticle = function(){
         $scope.showProperty = false;
@@ -137,7 +162,7 @@ app.controller('articleWikiDetailController', function($scope, $http, $location,
         $scope.articleContentNew = $scope.articleSearchedContent;
     }
 
-    $scope.editingArticle = function(){
+    $scope.editingArticle = function($files){
         var newArticleX = {
             title : $scope.articleSearchedTitle,
             newTitle : $scope.articleTitleNew,
@@ -153,9 +178,17 @@ app.controller('articleWikiDetailController', function($scope, $http, $location,
                         article.title = $scope.articleTitleNew;
                     }
                 })
-                $scope.showProperty = true;
                 $scope.articleSearchedTitle = $scope.articleTitleNew;
                 $scope.articleSearchedContent = $scope.articleContentNew;
+                if ($files != null) {
+                    uploadUsing$upload($files[0]);
+                }else{
+                    $scope.showProperty = true;
+                }
+                
+                
+
+                
 
               })
             .error(function(data, status, headers, config) {
@@ -188,4 +221,4 @@ app.controller('articleWikiDetailController', function($scope, $http, $location,
         }
 
     $scope.articleSearched();
-});
+}]);
