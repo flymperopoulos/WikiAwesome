@@ -68,4 +68,10 @@ routes.editWiki = function (req,res){
 	})
 }
 
+routes.imageUpload = function (req,res){
+	console.log(req.files);
+	console.log(req.body);
+	res.send('ok')
+}
+
 module.exports = routes;

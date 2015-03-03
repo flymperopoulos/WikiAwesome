@@ -5,6 +5,7 @@ var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var index = require('./routes/index');
+var multer  = require('multer');
 
 var app = express();
 
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(multer({ dest: './uploads/'}))
 
 // GET requests
 app.get("/wikis", index.wikis);
@@ -24,6 +26,7 @@ app.get("/wikis", index.wikis);
 app.post("/createWiki", index.createWiki);
 app.post("/articleWikiDetail", index.wikiDetail);
 app.post("/editWiki", index.editWiki);
+app.post("/imageUpload", index.imageUpload);
 
 app.get("*", index.home);
 

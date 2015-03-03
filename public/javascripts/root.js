@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngRoute']);
+var app = angular.module('app', ['ngRoute','ngFileUpload']);
 
 app.config(function($routeProvider, $locationProvider){
 
@@ -69,25 +69,56 @@ app.controller("mainController", function($scope, $http, $location, $routeParams
 
 });
 
-app.controller('newWikiController', function($scope, $http, $location) {
+app.controller('newWikiController', ['$scope','$upload','$http','$location','$timeout', function($scope, $upload, $http, $location, $timeout) {
+    
+    function uploadUsing$upload(file) {
+        file.upload = $upload.upload({
+            url: '/imageupload',
+            method: 'POST',
+            headers: {
+                
+            },
+            file: file
+        });
 
-    $scope.submitNewArticle= function(){ 
+        file.upload.then(function(response) {
+            $timeout(function() {
+                file.result = response.data;
+                $location.path('/'+$scope.articleTitle);
+            });
+        }, function(response) {
+            if (response.status > 0)
+                $scope.errorMsg = response.status + ': ' + response.data;
+        });
+
+        file.upload.progress(function(evt) {
+            // Math.min is to fix IE which reports 200% sometimes
+            file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+        });
+    }
+
+    $scope.submitNewArticle = function($files){ 
         var ArticleX = {
             title : $scope.articleTitle,
-            content: $scope.articleContent,
-            image : $scope.articleImage
+            content: $scope.articleContent
         };
 
-        console.log($scope.articleImage);
+        $http.post("/createWiki", ArticleX)
+            .success(function(data, status, headers, config) {
+                console.log("data", data);
+                console.log("status", status);
 
-    $http.post("/createWiki", ArticleX)
-        .success(function(data, status, headers, config) {
-            console.log("data", data);
-            console.log("status", status);
-            console.log("cock ", $scope.articles);
-            $scope.articles.push(data);
-            $location.path('/');
-          })
+
+                $scope.articles.push(data);
+                console.log("files",$files);
+                if ($files != null) {
+                    uploadUsing$upload($files[0]);
+                }else{
+                    $location.path('/'+$scope.articleTitle);
+                }
+
+                
+        })
 
         .error(function(data, status, headers, config) {
             console.log("data", data);
@@ -95,7 +126,7 @@ app.controller('newWikiController', function($scope, $http, $location) {
           });
     }
 
-});
+}]);
 
 app.controller('articleWikiDetailController', function($scope, $http, $location, $routeParams){
     $scope.showProperty = true;
