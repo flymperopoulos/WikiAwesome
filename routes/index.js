@@ -75,7 +75,10 @@ routes.imageUpload = function (req,res){
 	var data = fs.readFileSync(req.files.file.path);
 	WikiArticle.update({title:req.body.title},{image:{data:data,contentType:req.files.file.mimetype}},function(err,data){
 		if(err){res.status(500).send('Failed');}
-		else{res.send('ok');}
+		else{
+			fs.unlinkSync(req.files.file.path);
+			res.send('ok');
+		}
 	});
 
 	
